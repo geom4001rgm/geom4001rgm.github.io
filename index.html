@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"/>
+    <script src='https://unpkg.com/leaflet@1.9.2/dist/leaflet.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
+    <title>GEOM 4008 Tutorial</title>
+    <style>
+      #mapdiv{
+        width:600px;
+        height:600px;
+      }
+    </style>
+  </head>
+  <body>
+        <div class='navbar'>
+          <a href='#About Us'>Home</a>
+          <a href='#Contact'>Contact</a>
+        </div>
+        <h1>TITLE</h1>
+        <p> Insert whatever text you want here.
+    <h2 class='personal'>Picture</h2>
+      <img src='img\gis.jpeg' height='200px'>
+      <h3>Unordered list</h3>
+      <ul>
+        <li>QGIS</li>
+        <li>ArcGIS</li>
+        <li>JavaScript</li>
+      </ul>
+    <h3>Ordered list</h3>
+    <ol>
+      <li>Loeb Building</li>
+      <li>Southam Hall</li>
+      <li>MacOdrum Library</li>
+    </ol>
+    <h2>Map</h2>
+      <div id='mapdiv'>
+      <script type='text/javascript'>
+        var mymap=L.map('mapdiv').setView([45.380916, -75.698869], 13);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoiZ2VvbTQwMDEiLCJhIjoiY2w4bmw3NjN0MDAwZzNvcDl6dnppZnp0YyJ9.5ewi5WQKlGiKEK4hMh8sjA'
+        }).addTo(mymap);
+
+      var place = 'Loeb Building'
+        geocode_url = "https://nominatim.openstreetmap.org/search";
+        $.ajax({
+          dataType: 'json',
+          url: geocode_url,
+          type: 'get',
+          data: {
+            q: place+',Ottawa,Canada',
+            format: 'json',
+          },
+          success: function(data){
+            console.log(data);
+            L.marker([data[0].lat, data[0].lon], {
+
+            })
+            .addTo(mymap)
+            .bindPopup(place);
+          }
+        })
+      </script>
+      </div>
+      <div id='Contact'>
+        <hr>
+        CONTACT INFO<br/>
+        Loeb Building<br/>
+        Carleton University<br/>
+        1125 Colonel By Drive<br/>
+        Ottawa, ON<br/>
+        K1S 5B6<br/>
+        (613) 520-2600
+      </div>
+  </body>
+</html>
